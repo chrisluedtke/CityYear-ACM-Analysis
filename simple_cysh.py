@@ -1,20 +1,17 @@
-
-# coding: utf-8
-
-# In[ ]:
-
-
 import pandas as pd
 from simple_salesforce import Salesforce
 
-with open('C:\\Users\\City_Year\\Desktop\\salesforce_credentials.txt', 'r') as f:
-    read_data = f.read()
-    sf_creds = eval(read_data)
-
-cysh = Salesforce(instance_url=sf_creds['instance_url'],
-                  password=sf_creds['password'],
-                  username=sf_creds['username'],
-                  security_token=sf_creds['security_token'])
+def init_cysh():
+    with open('C:\\Users\\City_Year\\Desktop\\salesforce_credentials.txt', 'r') as f:
+        read_data = f.read()
+        sf_creds = eval(read_data)
+        
+    cysh = Salesforce(instance_url=sf_creds['instance_url'],
+                      password=sf_creds['password'],
+                      username=sf_creds['username'],
+                      security_token=sf_creds['security_token'])
+    
+    return cysh
 
 def get_cysh_df(sf_object, sf_fields, rename_id=False, rename_name=False, sf=cysh):
     sf_fields_str = ", ".join(sf_fields)
@@ -38,3 +35,4 @@ def get_cysh_df(sf_object, sf_fields, rename_id=False, rename_name=False, sf=cys
 
     return df
 
+cysh = init_cysh()
