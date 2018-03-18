@@ -13,11 +13,11 @@ def init_cysh():
     
     return cysh
 
-def get_cysh_df(sf_object, sf_fields, rename_id=False, rename_name=False, sf=cysh):
+def get_cysh_df(sf_object, sf_fields, rename_id=False, rename_name=False):
     sf_fields_str = ", ".join(sf_fields)
     querystring = (f"SELECT {sf_fields_str} FROM {sf_object}")
     query_return = cysh.query_all(querystring)
-
+    
     query_list = []
     for row in query_return['records']:
         record = []
@@ -32,7 +32,7 @@ def get_cysh_df(sf_object, sf_fields, rename_id=False, rename_name=False, sf=cys
         df.rename(columns={'Id':sf_object}, inplace=True)
     if rename_name==True:
         df.rename(columns={'Name':(sf_object+'_Name')}, inplace=True)
-
+    
     return df
 
 cysh = init_cysh()
