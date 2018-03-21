@@ -35,4 +35,11 @@ def get_cysh_df(sf_object, sf_fields, rename_id=False, rename_name=False):
     
     return df
 
+def get_cysh_fields(sf_object):
+    one_id = cysh.query(f"SELECT Id FROM {sf_object} LIMIT 1")['records'][0]['Id']
+    response = getattr(cysh, sf_object).get(one_id)
+    fields = sorted(list(response.keys()))
+    
+    return fields
+
 cysh = init_cysh()
