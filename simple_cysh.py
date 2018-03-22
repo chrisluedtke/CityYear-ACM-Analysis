@@ -14,6 +14,9 @@ def init_cysh():
     return cysh
 
 def get_cysh_df(sf_object, sf_fields, rename_id=False, rename_name=False):
+    if type(sf_fields) == str and sf_fields.lower() == 'all':
+        sf_fields = get_cysh_fields(sf_object)
+
     sf_fields_str = ", ".join(sf_fields)
     querystring = (f"SELECT {sf_fields_str} FROM {sf_object}")
     query_return = cysh.query_all(querystring)
@@ -39,6 +42,7 @@ def get_cysh_fields(sf_object):
     one_id = cysh.query(f"SELECT Id FROM {sf_object} LIMIT 1")['records'][0]['Id']
     response = getattr(cysh, sf_object).get(one_id)
     fields = sorted(list(response.keys()))
+    fields.remove('attributes')
     
     return fields
 
