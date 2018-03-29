@@ -16,12 +16,13 @@ def init_cysh():
 def get_cysh_df(sf_object, sf_fields, where=None, rename_id=False, rename_name=False):
     if type(sf_fields) == str and sf_fields.lower() == 'all':
         sf_fields = get_cysh_fields(sf_object)
-    else:
-        sf_fields_str = ", ".join(sf_fields)
+    
+    sf_fields_str = ", ".join(sf_fields)
+    
     if where==None:
         querystring = (f"SELECT {sf_fields_str} FROM {sf_object}")
     else:
-        querystring = (f"SELECT {sf_fields_str} FROM {sf_object} WHERE {filt}")
+        querystring = (f"SELECT {sf_fields_str} FROM {sf_object} WHERE {where}")
         
     query_return = cysh.query_all(querystring)
     query_list = []
